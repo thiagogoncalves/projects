@@ -1,0 +1,15 @@
+
+.hdr-principal {
+    background-color: lightskyblue;
+    margin-bottom: 15px;
+}
+
+.hdr-title {
+    color: white; 
+    font-size: 2rem;
+    padding: 1rem; 
+}
+
+.hdr-logo {
+    padding: 5px;
+}

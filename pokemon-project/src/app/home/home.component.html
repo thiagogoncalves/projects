@@ -1,0 +1,66 @@
+<form>
+  <div class="form-group">
+    <input type="email" 
+           class="form-control" 
+           name="pokemonFilterInputName"
+           id="pokemonFilterInput"
+           placeholder="Enter pokemon name"
+           (keyup)="filterPokemon()"
+           [(ngModel)]="filter">
+  </div>
+</form>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngIf="isLoading">
+      <td>
+          <i class="fas fa-spinner fa-pulse"></i>
+      </td>
+    </tr>
+    <tr *ngFor="let pkm of pokemonPagArray;">
+      <td>{{ pkm.name | uppercase }}</td>
+      <td class="text-right">
+        <a href="#" 
+           (click)="removeFavoritePokemon(pkm.name)" 
+           *ngIf="isFavoritePokemon(pkm.name)"
+           class="hm-icon-action"
+           placement="top" 
+           ngbTooltip="Remove favorite">
+          <span><i class="fas fa-star"></i></span>
+        </a>
+        <a href="#" 
+           (click)="addFavoritePokemon(pkm.name)" 
+           *ngIf="!isFavoritePokemon(pkm.name)"
+           class="hm-icon-action"
+           placement="top" 
+           ngbTooltip="Add favorite">
+          <span><i class="far fa-star"></i></span>
+        </a>
+        <a href="#" 
+           [ngbPopover]="pokemonTypeContent" 
+           popoverTitle="Pokemon Type"
+           placement="bottom"
+           class="hm-icon-action"
+           (click)="getLocationPokemon(pkm.url)"
+           placement="top" 
+           ngbTooltip="Pokemon type">
+          <span><i class="fas fa-info-circle"></i></span>
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<ngb-pagination [collectionSize]="total" 
+                (pageChange)="onChange($event)"
+                [(page)]="page"
+                [maxSize]="10"
+                aria-label="Default pagination"
+                class="d-flex justify-content-center"
+                *ngIf="!isFiltering">
+</ngb-pagination>
+<ng-template #pokemonTypeContent>{{pokemonType}}</ng-template>
